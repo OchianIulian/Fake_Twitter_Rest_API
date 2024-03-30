@@ -27,20 +27,18 @@ public class User implements UserDetails {
             strategy = GenerationType.AUTO
     )
     private Long id;
-    private String name;
-    private String username;
+    private String firstname;
+    private String lastname;
     private String email;
     private String password;
-    private Boolean locked;
-    private Boolean enabled;
+    private Boolean locked = false;
+    private Boolean enabled = false;
 
-    public User(String name, String username, String email, String password, Boolean locked, Boolean enabled) {
-        this.name = name;
-        this.username = username;
+    public User(String firstname, String lastname, String email, String password) {
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.email = email;
         this.password = password;
-        this.locked = locked;
-        this.enabled = enabled;
     }
 
     @Override
@@ -55,7 +53,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return email;
     }
 
     @Override
