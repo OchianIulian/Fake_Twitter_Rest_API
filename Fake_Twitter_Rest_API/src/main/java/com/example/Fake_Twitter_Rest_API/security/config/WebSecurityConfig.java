@@ -37,13 +37,13 @@ public class WebSecurityConfig {
                 // Authorize HTTP requests
                 .authorizeHttpRequests(authorize -> authorize
                         // Allow all methods under "/register/" to be accessed without authentication
-                        .requestMatchers("/register/**")
+                        .requestMatchers("/registration/**")
                         .permitAll()
                         // Require authentication for any other request
                         .anyRequest().authenticated())
-                .formLogin(formLogin -> {
-                    formLogin.loginPage("/register").permitAll();
-                });
+//                .formLogin(formLogin -> {
+//                    formLogin.loginPage("/registration").permitAll();
+//                });
         return http.build();
     }
 
