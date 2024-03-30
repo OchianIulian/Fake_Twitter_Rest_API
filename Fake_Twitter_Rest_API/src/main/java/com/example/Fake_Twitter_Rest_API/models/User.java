@@ -7,6 +7,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
+/**
+ * This is a User model for storing in database
+ */
 @Getter
 @Setter
 @EqualsAndHashCode
