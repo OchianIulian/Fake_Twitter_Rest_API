@@ -40,7 +40,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/registration/**")
                         .permitAll()
                         // Require authentication for any other request
-                        .anyRequest().authenticated())
+                        .anyRequest().authenticated());
 //                .formLogin(formLogin -> {
 //                    formLogin.loginPage("/registration").permitAll();
 //                });
