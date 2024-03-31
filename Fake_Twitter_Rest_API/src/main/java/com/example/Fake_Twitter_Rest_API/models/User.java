@@ -5,7 +5,9 @@ import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * This is a User model for storing in database
@@ -34,12 +36,16 @@ public class User implements UserDetails {
     private Boolean locked = false;
     private Boolean enabled = true;
 
+    public List<Follow> followers;
+
     public User(String firstname, String lastname, String email, String password) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.password = password;
     }
+
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
