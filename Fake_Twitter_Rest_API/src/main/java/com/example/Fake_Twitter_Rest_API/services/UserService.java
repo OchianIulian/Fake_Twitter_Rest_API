@@ -44,6 +44,6 @@ public class UserService implements UserDetailsService {
         user.setPassword(encodedPassword);
 
         userRepository.save(user);
-        return "";
+        return "Signed up";
     }
 }

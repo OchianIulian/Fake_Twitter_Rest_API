@@ -32,7 +32,7 @@ public class User implements UserDetails {
     private String email;
     private String password;
     private Boolean locked = false;
-    private Boolean enabled = false;
+    private Boolean enabled = true;
 
     public User(String firstname, String lastname, String email, String password) {
         this.firstname = firstname;
