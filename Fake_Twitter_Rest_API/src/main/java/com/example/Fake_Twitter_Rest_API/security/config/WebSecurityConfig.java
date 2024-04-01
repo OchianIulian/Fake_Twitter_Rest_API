@@ -1,26 +1,33 @@
 package com.example.Fake_Twitter_Rest_API.security.config;
 import com.example.Fake_Twitter_Rest_API.services.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.util.Arrays;
 
 @Configuration
 @AllArgsConstructor
 @EnableWebSecurity
+@EnableGlobalAuthentication
 public class WebSecurityConfig {
 
-    private final UserService userService;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final AuthenticationProvider authenticationProvider;
+    private final JwtAuthenticationFilter jwtAuthFilter;
 
     /**
      * This metthod allows register type endpoints to be accessed without login
@@ -37,35 +44,15 @@ public class WebSecurityConfig {
                 // Authorize HTTP requests
                 .authorizeHttpRequests(authorize -> authorize
                         // Allow all methods under "/register/" to be accessed without authentication
+                        //.requestMatchers("/registration/**")
                         .requestMatchers("/registration/**")
                         .permitAll()
                         // Require authentication for any other request
-                        .anyRequest().authenticated());
-//                .formLogin(formLogin -> {
-//                    formLogin.loginPage("/registration").permitAll();
-//                });
+                        .anyRequest().authenticated()
+                ) .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authenticationProvider(authenticationProvider)
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
-    }
-
-    /**
-     * AuthenticationManager este interfața principală în Spring Security
-     * care gestionează procesul de autentificare a utilizatorilor
-     * @param auth
-     * @return
-     * @throws Exception
-     */
-    @Bean
-    AuthenticationManager authenticationManager(AuthenticationManagerBuilder auth) throws Exception {
-        return new ProviderManager(Arrays.asList(daoAuthenticationProvider()));
-    }
-
-    @Bean
-    public DaoAuthenticationProvider daoAuthenticationProvider(){
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setPasswordEncoder(bCryptPasswordEncoder);
-        provider.setUserDetailsService(userService);
-        return provider;
-
     }
 
 }

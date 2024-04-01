@@ -1,16 +1,19 @@
 package com.example.Fake_Twitter_Rest_API.services;
 
-import com.example.Fake_Twitter_Rest_API.models.LoginRequest;
-import com.example.Fake_Twitter_Rest_API.models.RegistrationRequest;
+import com.example.Fake_Twitter_Rest_API.models.requests.AuthenticationResponse;
+import com.example.Fake_Twitter_Rest_API.models.requests.LoginRequest;
+import com.example.Fake_Twitter_Rest_API.models.requests.RegistrationRequest;
 import com.example.Fake_Twitter_Rest_API.models.User;
 import com.example.Fake_Twitter_Rest_API.repositories.UserRepository;
 import com.example.Fake_Twitter_Rest_API.services.regex.EmailValidator;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -18,6 +21,8 @@ import java.util.Optional;
  * This class is used for Register Logic
  */
 @Service
+@RequiredArgsConstructor
+@Transactional
 public class RegistrationService {
     @Autowired
     private EmailValidator emailValidator;
@@ -25,6 +30,8 @@ public class RegistrationService {
     private UserService userService;
     @Autowired
     private UserRepository userRepository;
+    private final JwtService jwtService;
+    private final AuthenticationManager authenticationManager;
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
@@ -33,34 +40,47 @@ public class RegistrationService {
      * @param request
      * @return
      */
-    public String register(RegistrationRequest request) {
-        boolean isValidEmail = emailValidator.test(request.getEmail());
-        if(!isValidEmail){
-            throw new IllegalStateException("email not valid");
+    public AuthenticationResponse register(RegistrationRequest request) {
+        User user = authenticateUser(request);
+        var checkUser = userRepository.findByEmail(request.getEmail());
+        if(checkUser.isPresent()){
+            throw new RuntimeException("User already exist");
         }
+        var jwtToken = jwtService.generateToken(user);
+        if(checkUser.isEmpty())
+            userRepository.save(user);
+        return AuthenticationResponse.builder().token(jwtToken).build();
 
-
-        return userService.signUpUser(new User(
-                request.getFirstName(),
-                request.getLastName(),
-                request.getEmail(),
-                request.getPassword()
-        ));
     }
+
 
     /**
      * Se face autentificarea userului
-     * @param email
-     * @param password
      * @return
      */
-    public User authenticateUser(String email, String password){
-        System.out.println("Emailul userului:");
-        Optional<User> authenticatedUser = userRepository.findByEmail(email);
-        System.out.println(authenticatedUser.get().getEmail());
-        if(authenticatedUser.isPresent() && bCryptPasswordEncoder.matches(password, authenticatedUser.get().getPassword())){
-            return authenticatedUser.get();
-        }
-        return null;
+    private User authenticateUser(RegistrationRequest request){
+        return User.builder()
+                .firstname(request.getFirstName())
+                .lastname(request.getLastName())
+                .email(request.getEmail())
+                .password(bCryptPasswordEncoder.encode(request.getPassword() ))
+                .build();
+    }
+
+    /**
+     * Se face login
+     * @param request
+     * @return
+     */
+    public AuthenticationResponse authenticate(LoginRequest request) {
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
+        );
+        var user= userRepository.findByEmail(request.getUsername()).orElseThrow();
+
+        var jwtToken =  jwtService.generateToken(user);
+        return AuthenticationResponse.builder()
+                .token(jwtToken)
+                .build();
     }
 }

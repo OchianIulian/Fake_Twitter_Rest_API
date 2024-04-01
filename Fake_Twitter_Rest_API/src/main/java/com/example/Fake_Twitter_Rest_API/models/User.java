@@ -12,22 +12,17 @@ import java.util.List;
 /**
  * This is a User model for storing in database
  */
+@Builder
 @Getter
 @Setter
+@AllArgsConstructor
 @EqualsAndHashCode
 @NoArgsConstructor
 @Entity
 public class User implements UserDetails {
 
     @Id
-    @SequenceGenerator(
-            name = "user_sequence",
-            sequenceName = "user_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.AUTO
-    )
+    @GeneratedValue
     private Long id;
     private String firstname;
     private String lastname;
@@ -35,8 +30,6 @@ public class User implements UserDetails {
     private String password;
     private Boolean locked = false;
     private Boolean enabled = true;
-
-    public List<Follow> followers;
 
     public User(String firstname, String lastname, String email, String password) {
         this.firstname = firstname;
@@ -69,7 +62,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return !locked;
+        return true;
     }
 
     @Override
@@ -79,6 +72,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return enabled;
+        return true;
     }
 }

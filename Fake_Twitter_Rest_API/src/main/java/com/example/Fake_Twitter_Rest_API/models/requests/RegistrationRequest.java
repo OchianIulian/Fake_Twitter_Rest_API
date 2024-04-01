@@ -1,4 +1,4 @@
-package com.example.Fake_Twitter_Rest_API.models;
+package com.example.Fake_Twitter_Rest_API.models.requests;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -9,7 +9,9 @@ import lombok.ToString;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class LoginRequest {
+public class RegistrationRequest {
+    private final String firstName;
+    private final String lastName;
     private final String email;
     private final String password;
 }
