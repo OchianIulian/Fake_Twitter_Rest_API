@@ -31,14 +31,15 @@ public class User implements UserDetails {
     private Boolean locked = false;
     private Boolean enabled = true;
 
+    private List<String> followList = new ArrayList<>();
+    private List<String> followersList = new ArrayList<>();
+
     public User(String firstname, String lastname, String email, String password) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.password = password;
     }
-
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -11,9 +11,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
+@Service
 @Getter
 @Setter
 @AllArgsConstructor
@@ -28,8 +31,12 @@ public class UserActionsService {
             String firstName = user.get().getFirstname();
             String lastName = user.get().getLastname();
 
-            String response = "username: " + userName + "\nfirstName: " + firstName
-                    + "\nlastName: " + lastName;
+            List<String> followList = user.get().getFollowList();
+            List<String> followersList = user.get().getFollowersList();
+
+            String response = "username: " + username + "\nfirstName: " + firstName
+                    + "\nlastName: " + lastName + "\nfollowing: "+followList.toString()
+                    +"\nfollowers: "+followersList.toString();
             return response;
         } else {
             throw new UsernameNotFoundException("User not found");
@@ -47,8 +54,12 @@ public class UserActionsService {
             String firstName = userDetails.getFirstname();
             String lastName = userDetails.getLastname();
 
+            List<String> followList = userDetails.getFollowList();
+            List<String> followersList = userDetails.getFollowersList();
+
             String response = "username: " + username + "\nfirstName: " + firstName
-                    + "\nlastName: " + lastName;
+                    + "\nlastName: " + lastName + "\nfollowing: "+followList.toString()
+                    +"\nfollowers: "+followersList.toString();
             return response;
         } else throw new RuntimeException("Something wrong in getUserInfo()");
     }
