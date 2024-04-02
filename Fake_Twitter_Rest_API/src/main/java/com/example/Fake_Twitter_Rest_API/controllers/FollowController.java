@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+//todo: De mutat follow controller in UserDetailsCOntroller si Follow service in UserActionsService
+//todo: pentru a fi lasat follow controller si followService pentru entitatea follow
 /**
  * This Class is a controller that contains endpoints for follow specific
  * operations that user can make after he registered
