@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -82,5 +84,25 @@ public class RegistrationService {
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
+    }
+
+    public String deletePersonalAccount() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Object principal = authentication.getPrincipal();
+
+        if(principal instanceof User){
+
+            User userDetails =  (User) principal;
+
+            String username = userDetails.getUsername();
+            var user = userRepository.findByEmail(username);
+            if(user.isPresent()){
+                userRepository.delete(user.get());
+                return "User deleted";
+            }
+        }
+
+        SecurityContextHolder.clearContext();
+        return "User does not exist";
     }
 }
