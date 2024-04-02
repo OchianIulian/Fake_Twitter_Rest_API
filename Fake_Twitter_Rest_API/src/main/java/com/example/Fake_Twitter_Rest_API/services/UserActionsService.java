@@ -16,6 +16,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * This class contains the logic for requests made by user after it logged in
+ */
 @Service
 @Getter
 @Setter
@@ -24,6 +27,12 @@ import java.util.Optional;
 public class UserActionsService {
     @Autowired
     UserRepository userRepository;
+
+    /**
+     * User obtain all information about another by it's username
+     * @param username
+     * @return
+     */
     public String getUserDetailsByUsername(String username) {
         Optional<User> user = userRepository.findByEmail(username);
         if(user.isPresent()){
@@ -43,6 +52,10 @@ public class UserActionsService {
         }
     }
 
+    /**
+     * Return all details about current user
+     * @return
+     */
     public String getUserInfo() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Object principal = authentication.getPrincipal();

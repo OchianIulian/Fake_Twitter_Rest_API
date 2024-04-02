@@ -5,6 +5,9 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
+/**
+ * Model for Login input
+ */
 @Getter
 @AllArgsConstructor
 @EqualsAndHashCode

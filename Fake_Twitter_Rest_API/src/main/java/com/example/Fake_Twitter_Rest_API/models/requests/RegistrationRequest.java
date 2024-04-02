@@ -5,6 +5,9 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
+/**
+ * Model for SignUp input
+ */
 @Getter
 @AllArgsConstructor
 @EqualsAndHashCode

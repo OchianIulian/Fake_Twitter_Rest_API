@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * This clas is responsible for following requests logic
+ */
 @Service
 @AllArgsConstructor
 public class FollowService {
@@ -20,6 +23,13 @@ public class FollowService {
     private UserRepository userRepository;
     @Autowired
     private UserService userService;
+
+    /**
+     * Follow somebody and the follower become followed by current user.
+     * This information is stored in followersList and followList in UserEntity
+     * @param userEmail
+     * @return
+     */
     public ResponseEntity<String> followByEmail(String userEmail) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Object principal = authentication.getPrincipal();

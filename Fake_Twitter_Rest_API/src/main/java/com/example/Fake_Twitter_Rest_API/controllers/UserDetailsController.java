@@ -5,8 +5,10 @@ import com.example.Fake_Twitter_Rest_API.services.UserActionsService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
+/**
+ * This Class is a controller that contains endpoints for
+ * operations that user can make after he registered
+ */
 @RestController
 @RequestMapping(path = "/user")
 @AllArgsConstructor
@@ -16,26 +18,30 @@ public class UserDetailsController {
     private UserActionsService userActionsService;
 
 
+    /**
+     * Get personal information
+     * @return
+     */
     @GetMapping("/user-info")
     public String getUserInfo(){
         return userActionsService.getUserInfo();
     }
 
+    /**
+     * Get another user information by email
+     * @param username
+     * @return
+     */
     @GetMapping("/user-info/{username}")
     public String getUserDetailsByUsername(@PathVariable String username){
         return userActionsService.getUserDetailsByUsername(username);
     }
 
-    @PutMapping("/follow/{userFollowed}")
-    public String followUser(@PathVariable String userFollowed){
-        return "follow function";
-    }
-
-    @PutMapping("/unfollow/{userFollowed}")
-    public String unfollowUser(@PathVariable String userFollowed){
-        return "unfollow function";
-    }
-
+    /**
+     * Delete personal account
+     * @param username
+     * @return
+     */
     @DeleteMapping("/del-personal-acc")
     public String deleteAccount(String username){
         return registrationService.deletePersonalAccount();

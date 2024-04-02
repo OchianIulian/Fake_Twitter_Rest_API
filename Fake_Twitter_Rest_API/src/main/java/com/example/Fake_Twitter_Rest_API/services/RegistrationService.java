@@ -89,6 +89,10 @@ public class RegistrationService {
                 .build();
     }
 
+    /**
+     * This method allows the user to delete it's account permanently
+     * @return
+     */
     public String deletePersonalAccount() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Object principal = authentication.getPrincipal();
