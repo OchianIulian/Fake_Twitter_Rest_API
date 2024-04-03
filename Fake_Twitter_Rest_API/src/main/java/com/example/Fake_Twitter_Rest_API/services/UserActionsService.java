@@ -91,11 +91,17 @@ public class UserActionsService {
         Object principal = authentication.getPrincipal();
 
         Optional<User> user = userRepository.findByEmail(userEmail);
-        if(user.isPresent()){
-            User newUser = (User) principal;
+        User newUser = (User) principal;
+        //se verifica daca userul e diferit de cel conectat
+        if(user.get().equals(newUser)){
+            throw new RuntimeException("You can not follow same user");
+        }
+
+        if(user.isPresent() ){
             User followedUser = user.get();
             List<String> followedList;
             List<String> followList = newUser.getFollowList();
+            //se verifica daca s-a mai dat follow inainte
             if(!followList.contains(userEmail)){
                 followedList = followedUser.getFollowersList();
                 followedList.add(newUser.getEmail());
@@ -106,6 +112,7 @@ public class UserActionsService {
             } else {
                 return ResponseEntity.ok("User already exist");
             }
+            //save in tables
             userRepository.save(newUser);
             userRepository.save(followedUser);
             followService.followUser(newUser, followedUser);
