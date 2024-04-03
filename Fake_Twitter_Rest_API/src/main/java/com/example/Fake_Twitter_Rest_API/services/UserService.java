@@ -1,6 +1,5 @@
 package com.example.Fake_Twitter_Rest_API.services;
 
-import com.example.Fake_Twitter_Rest_API.models.User;
 import com.example.Fake_Twitter_Rest_API.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

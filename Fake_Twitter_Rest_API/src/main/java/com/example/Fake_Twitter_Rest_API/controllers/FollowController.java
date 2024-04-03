@@ -15,26 +15,18 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @AllArgsConstructor
-@RequestMapping(path = "/follow")
 public class FollowController {
 
     private FollowService followService;
 
-
-    @GetMapping("/hello")
-    public ResponseEntity<String> sayHello() {
+    @GetMapping("/followers/{userEmail}")
+    public ResponseEntity<String> getFollowersByEmail(@PathVariable String userEmail) {
         String message = "Hello";
         return ResponseEntity.ok(message);
     }
 
-    /**
-     * Follow another user and that user will store it's follower
-     * @param userEmail
-     * @return
-     */
-    @PutMapping("/{userEmail}")
-    public ResponseEntity<String> follow(@PathVariable String userEmail){
-        return followService.followByEmail(userEmail);
+    @GetMapping("/following/{userEmail}")
+    public ResponseEntity<String> getFollowingByEmail(@PathVariable String userEmail){
+        return ResponseEntity.ok("Hello");
     }
-
 }

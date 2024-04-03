@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,6 +28,8 @@ import java.util.Optional;
 public class UserActionsService {
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    FollowService followService;
 
     /**
      * User obtain all information about another by it's username
@@ -75,5 +78,40 @@ public class UserActionsService {
                     +"\nfollowers: "+followersList.toString();
             return response;
         } else throw new RuntimeException("Something wrong in getUserInfo()");
+    }
+
+    /**
+     * Follow somebody and the follower become followed by current user.
+     * This information is stored in followersList and followList in UserEntity
+     * @param userEmail
+     * @return
+     */
+    public ResponseEntity<String> followByEmail(String userEmail) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Object principal = authentication.getPrincipal();
+
+        Optional<User> user = userRepository.findByEmail(userEmail);
+        if(user.isPresent()){
+            User newUser = (User) principal;
+            User followedUser = user.get();
+            List<String> followedList;
+            List<String> followList = newUser.getFollowList();
+            if(!followList.contains(userEmail)){
+                followedList = followedUser.getFollowersList();
+                followedList.add(newUser.getEmail());
+                followedUser.setFollowersList(followedList);
+
+                followList.add(userEmail);
+                newUser.setFollowList(followList);
+            } else {
+                return ResponseEntity.ok("User already exist");
+            }
+            userRepository.save(newUser);
+            userRepository.save(followedUser);
+            followService.followUser(newUser, followedUser);
+            return ResponseEntity.ok("Follow aproved");
+        } else {
+            return ResponseEntity.ok("Nu exista userul dat");
+        }
     }
 }

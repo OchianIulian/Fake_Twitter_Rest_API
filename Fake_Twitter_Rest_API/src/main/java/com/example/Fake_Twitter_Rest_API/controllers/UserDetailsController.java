@@ -3,6 +3,7 @@ package com.example.Fake_Twitter_Rest_API.controllers;
 import com.example.Fake_Twitter_Rest_API.services.RegistrationService;
 import com.example.Fake_Twitter_Rest_API.services.UserActionsService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -47,4 +48,13 @@ public class UserDetailsController {
         return registrationService.deletePersonalAccount();
     }
 
+    /**
+     * Follow another user and that user will store it's follower
+     * @param userEmail
+     * @return
+     */
+    @PutMapping("follow/{userEmail}")
+    public ResponseEntity<String> follow(@PathVariable String userEmail){
+        return userActionsService.followByEmail(userEmail);
+    }
 }
