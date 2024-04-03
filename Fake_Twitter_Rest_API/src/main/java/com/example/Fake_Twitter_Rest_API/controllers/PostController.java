@@ -16,9 +16,8 @@ public class PostController {
     private PostService postService;
 
     @PostMapping("/create")
-    public ResponseEntity<String> createPost(@RequestBody RegistrationRequest postRequest){
-        //return postService.createPost(postRequest);
-        return ResponseEntity.ok("Create");
+    public ResponseEntity<String> createPost(@RequestBody PostRequest postRequest){
+        return postService.createPost(postRequest);
     }
 
     @GetMapping("/get-own-posts")

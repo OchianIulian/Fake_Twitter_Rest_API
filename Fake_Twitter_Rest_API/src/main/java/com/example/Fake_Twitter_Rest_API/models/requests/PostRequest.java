@@ -1,17 +1,13 @@
 package com.example.Fake_Twitter_Rest_API.models.requests;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
-@AllArgsConstructor
 @EqualsAndHashCode
+@AllArgsConstructor
+@NoArgsConstructor(force = true)
 @ToString
 public class PostRequest {
-    private final String firstName;
-    private final String lastName;
-    private final String email;
-    private final String password;
+    public final String message;
+
 }

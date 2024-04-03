@@ -3,14 +3,17 @@ package com.example.Fake_Twitter_Rest_API.models;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Post {
     @Id
@@ -20,17 +23,12 @@ public class Post {
     @JoinColumn(name = "user_id")
     private User user;
     private String message;
-    private Long timestamp;
+    private String timestamp;
     //private List<Reply> replies = new ArrayList<>();
 
-    public Post(User user, Long timestamp) {
-        this.user = user;
-        this.timestamp = timestamp;
-    }
 
-    public Post(User user, String message, Long timestamp) {
-        this.user = user;
+    public Post(String message) {
         this.message = message;
-        this.timestamp = timestamp;
+        timestamp = LocalDateTime.now().toString();
     }
 }
