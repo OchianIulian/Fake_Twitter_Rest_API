@@ -39,6 +39,10 @@ public class PostService {
         return ResponseEntity.ok("Create post");
     }
 
+    /**
+     * Return a String with all posts of connected user
+     * @return
+     */
     public ResponseEntity<String> getOwnPosts() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Object pricipal = authentication.getPrincipal();
@@ -50,6 +54,10 @@ public class PostService {
         return ResponseEntity.ok(posts.toString());
     }
 
+    /**
+     * Return as string with all posts of connected user's friends
+     * @return
+     */
     public ResponseEntity<String> getFeed() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Object pricipal = authentication.getPrincipal();
