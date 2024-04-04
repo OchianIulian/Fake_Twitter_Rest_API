@@ -17,6 +17,9 @@ Fake Twitter REST API este o aplicație backend care permite utilizatorilor:
 - să urmărească alți utilizatori
 - să șteargă permanent propriul cont 
 - să obțină informații despre contul lor sau despre alte conturi identificate după adresă de email.
+- sa creeze postari
+- sa vada postarile prietenilor
+- sa isi vada propriile postari
 
 
 ## Tehnologii utilizate
@@ -54,13 +57,17 @@ server.error.include-message=always
 - POST
   - /registration/register (inregistrare utilizator nou)
   - /registration/login (login)
+  - /post/create (utilizatorul conectat creaza o postare)
 - PUT
   - /follow/(user_email) (urmareste un utilizator in functie de email)
 - GET
   - /user/user-info/(user_email) (returneaza redalii despre userul cu emailul dat)
   - /user/user-info (returneaza detalii despre contul utilizatorului conectat)
+  - /post/get-own-posts (returneaza toate postarile personale)
+  - /post/get-feed (returneaza toate postarile prietenilor)
 - DELETE
   - /user/del-personal-acc (sterge contul utilizatorului conectat)
+  - /post/delete-post/(post_id) (sterge o postare dupa id_ul ei)
 
 
 Acesta este un ghid de bază pentru utilizarea API-ului Fake Twitter. Asigurați-vă că sunteți autentificat pentru a accesa anumite resurse și respectați cerințele de intrare specifice pentru fiecare endpoint.
