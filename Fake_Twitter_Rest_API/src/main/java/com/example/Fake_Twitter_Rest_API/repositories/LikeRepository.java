@@ -7,5 +7,5 @@ import org.springframework.transaction.annotation.Transactional;
 
 //@Repository
 //@Transactional
-public interface LikeRepository {
+public interface LikeRepository extends JpaRepository<Like, Long>{
 }
