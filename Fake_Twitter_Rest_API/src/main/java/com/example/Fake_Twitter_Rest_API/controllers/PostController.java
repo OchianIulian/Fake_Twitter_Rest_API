@@ -31,7 +31,7 @@ public class PostController {
     }
 
     @DeleteMapping("/delete-post/{id}")
-    public ResponseEntity<String> deletePost(@PathVariable String id){
+    public ResponseEntity<String> deletePost(@PathVariable Long id){
         return postService.deletePost(id);
     }
 

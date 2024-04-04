@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -50,10 +51,19 @@ public class PostService {
     }
 
     public ResponseEntity<String> getFeed() {
-        return ResponseEntity.ok("Get Feed");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Object pricipal = authentication.getPrincipal();
+        User user = (User) pricipal;
+
+        Long id = user.getId();
+
+        List<Post> posts = postRepository.getFeed(id);
+        return ResponseEntity.ok(posts.toString());
     }
 
-    public ResponseEntity<String> deletePost(String id) {
+    public ResponseEntity<String> deletePost(Long id) {
+        Optional<Post> post = postRepository.findById(id);
+        post.ifPresent(value -> postRepository.delete(value));
         return ResponseEntity.ok("Delete Post");
     }
 }
