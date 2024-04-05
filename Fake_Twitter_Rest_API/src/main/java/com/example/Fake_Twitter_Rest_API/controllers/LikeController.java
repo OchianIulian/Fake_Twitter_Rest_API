@@ -12,18 +12,18 @@ public class LikeController {
     private LikeService likeService;
 
     @PostMapping("/{postId}")
-    public ResponseEntity<String> likePost(@PathVariable String postId){
-        return ResponseEntity.ok("Like");
+    public ResponseEntity<String> likePost(@PathVariable Long postId){
+        return likeService.likePost(postId);
     }
 
     @DeleteMapping("/{postId}")
-    public ResponseEntity<String> removeLikePost(@PathVariable String postId){
-        return ResponseEntity.ok("Remove Like");
+    public ResponseEntity<String> removeLikeFromPost(@PathVariable Long postId){
+        return likeService.removeLikeFromPost(postId);
     }
 
     @GetMapping("/{postId}")
-    public ResponseEntity<String> getLikesNumber(@PathVariable String postId){
-        return ResponseEntity.ok("Like nr");
+    public ResponseEntity<String> getLikesNumber(@PathVariable Long postId){
+        return likeService.getLikesNumber(postId);
     }
 
 
