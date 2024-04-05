@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.Optional;
 
 @Service
@@ -55,6 +56,8 @@ public class LikeService {
     }
 
     public ResponseEntity<String> getLikesNumber(Long postId) {
-        return ResponseEntity.ok("Number of Likes");
+        Long likeNr = likeRepository.getPostLikes(postId);
+
+        return ResponseEntity.ok("This post has " + likeNr + " likes");
     }
 }
