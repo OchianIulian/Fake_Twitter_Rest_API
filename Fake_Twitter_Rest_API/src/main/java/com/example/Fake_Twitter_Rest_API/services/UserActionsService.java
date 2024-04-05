@@ -116,9 +116,19 @@ public class UserActionsService {
             userRepository.save(newUser);
             userRepository.save(followedUser);
             followService.followUser(newUser, followedUser);
-            return ResponseEntity.ok("Follow aproved");
+            return ResponseEntity.ok("Follow approved");
         } else {
             return ResponseEntity.ok("Nu exista userul dat");
         }
+    }
+
+    public ResponseEntity<String> unfollowByEmail(String userEmail) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Object principal = authentication.getPrincipal();
+
+        Optional<User> user = userRepository.findByEmail(userEmail);
+        User newUser = (User) principal;
+        user.ifPresent(value -> followService.unfollowUser(newUser, value));
+        return ResponseEntity.ok("Unfollow approved");
     }
 }

@@ -57,4 +57,9 @@ public class UserDetailsController {
     public ResponseEntity<String> follow(@PathVariable String userEmail){
         return userActionsService.followByEmail(userEmail);
     }
+
+    @DeleteMapping("unfollow/{userEmail}")
+    public ResponseEntity<String> unfollow(@PathVariable String userEmail){
+        return userActionsService.unfollowByEmail(userEmail);
+    }
 }
