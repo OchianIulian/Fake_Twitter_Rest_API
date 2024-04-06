@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * This is the base model for a Like entity
+ */
 @Getter
 @Setter
 @Entity

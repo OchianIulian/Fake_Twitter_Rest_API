@@ -10,6 +10,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This is a model for Post entity
+ */
 @Getter
 @Setter
 @AllArgsConstructor
@@ -23,7 +26,7 @@ public class Post {
     @JoinColumn(name = "user_id")
     private User user;
     private String message;
-    private String timestamp;
+    private String timestamp;//date and time when post was published
     //private List<Reply> replies = new ArrayList<>();
 
 

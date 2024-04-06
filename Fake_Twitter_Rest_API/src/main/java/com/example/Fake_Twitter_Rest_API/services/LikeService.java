@@ -23,6 +23,11 @@ public class LikeService {
     private PostRepository postRepository;
 
 
+    /**
+     * Like a post by it's id and save this action into it's table
+     * @param postId
+     * @return
+     */
     public ResponseEntity<String> likePost(Long postId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Object pricipal = authentication.getPrincipal();
@@ -39,6 +44,11 @@ public class LikeService {
         return ResponseEntity.ok("Liked post");
     }
 
+    /**
+     * Unlike a post by it's id and save this action into it's table
+     * @param postId
+     * @return
+     */
     public ResponseEntity<String> removeLikeFromPost(Long postId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Object pricipal = authentication.getPrincipal();
@@ -55,6 +65,11 @@ public class LikeService {
         return ResponseEntity.ok("Remove Like");
     }
 
+    /**
+     * Return the number of likes
+     * @param postId
+     * @return
+     */
     public ResponseEntity<String> getLikesNumber(Long postId) {
         Long likeNr = likeRepository.getPostLikes(postId);
 

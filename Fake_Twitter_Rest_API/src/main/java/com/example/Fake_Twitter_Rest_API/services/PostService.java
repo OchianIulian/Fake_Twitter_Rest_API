@@ -69,6 +69,11 @@ public class PostService {
         return ResponseEntity.ok(posts.toString());
     }
 
+    /**
+     * Delete a post from it's table
+     * @param id
+     * @return
+     */
     public ResponseEntity<String> deletePost(Long id) {
         Optional<Post> post = postRepository.findById(id);
         post.ifPresent(value -> postRepository.delete(value));

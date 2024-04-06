@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * This is a model for a Reply entity
+ */
 @Getter
 @Setter
 @AllArgsConstructor

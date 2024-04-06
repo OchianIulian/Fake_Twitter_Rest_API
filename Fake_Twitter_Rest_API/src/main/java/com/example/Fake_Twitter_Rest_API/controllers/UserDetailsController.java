@@ -58,6 +58,11 @@ public class UserDetailsController {
         return userActionsService.followByEmail(userEmail);
     }
 
+    /**
+     * Unfollow following user by it's email
+     * @param userEmail
+     * @return
+     */
     @DeleteMapping("unfollow/{userEmail}")
     public ResponseEntity<String> unfollow(@PathVariable String userEmail){
         return userActionsService.unfollowByEmail(userEmail);

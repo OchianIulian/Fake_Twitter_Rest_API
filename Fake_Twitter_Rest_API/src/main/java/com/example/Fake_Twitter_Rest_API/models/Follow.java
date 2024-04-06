@@ -8,6 +8,9 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+/**
+ * This is the base model for a follow entity
+ */
 @Getter
 @Setter
 @Entity
@@ -28,6 +31,11 @@ public class Follow {
 
     private LocalDateTime localDateTime;
 
+    /**
+     * Creates a follower
+     * @param user
+     * @param followingUser
+     */
     public Follow(User user, User followingUser) {
         this.user = user;
         this.followingUser = followingUser;

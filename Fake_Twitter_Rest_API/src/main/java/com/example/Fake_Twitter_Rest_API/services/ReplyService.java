@@ -21,6 +21,12 @@ public class ReplyService {
     private PostRepository postRepository;
 
 
+    /**
+     * Add a post reply. It can be public or private.
+     * @param postId
+     * @param replyRequest
+     * @return
+     */
     public ResponseEntity<String> replyPost(Long postId, ReplyRequest replyRequest) {
         Optional<Post> post = postRepository.findById(postId);
 

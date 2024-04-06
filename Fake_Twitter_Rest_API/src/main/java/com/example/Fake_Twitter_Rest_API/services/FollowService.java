@@ -18,10 +18,20 @@ public class FollowService {
     @Autowired
     private FollowRepository followRepository;
 
+    /**
+     * Follow a user and save this action into it's table
+     * @param follower
+     * @param following
+     */
     public void followUser(User follower, User following){
         followRepository.save(new Follow(follower, following));
     }
 
+    /**
+     * Unfollow user and remove the corespondent line from table
+     * @param follower
+     * @param following
+     */
     public void unfollowUser(User follower, User following){
         Optional<Follow> follow = followRepository.findFollow(follower, following);
 

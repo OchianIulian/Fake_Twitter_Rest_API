@@ -2,6 +2,9 @@ package com.example.Fake_Twitter_Rest_API.models.requests;
 
 import lombok.*;
 
+/**
+ * This is a model for a reply request model
+ */
 @Getter
 @EqualsAndHashCode
 @AllArgsConstructor

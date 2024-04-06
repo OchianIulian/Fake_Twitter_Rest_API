@@ -11,6 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * This class is used for managing Like tables
+ */
 @Repository
 @Transactional
 public interface LikeRepository extends JpaRepository<Like, Long>{
