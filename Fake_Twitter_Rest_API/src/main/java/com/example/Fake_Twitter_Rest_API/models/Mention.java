@@ -1,26 +1,28 @@
 package com.example.Fake_Twitter_Rest_API.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-//@Getter
-//@Setter
-//@AllArgsConstructor
-//@Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@Entity
+@Table(name = "Mention")
 public class Mention {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private Long id;
-//    private User user;
-//    private Post post;
-//
-//    public Mention(User user, Post post) {
-//        this.user = user;
-//        this.post = post;
-//    }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private Post post;
+
+    public Mention(User user, Post post) {
+        this.user = user;
+        this.post = post;
+    }
 }
