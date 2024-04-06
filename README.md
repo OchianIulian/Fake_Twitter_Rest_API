@@ -58,16 +58,21 @@ server.error.include-message=always
   - /registration/register (inregistrare utilizator nou)
   - /registration/login (login)
   - /post/create (utilizatorul conectat creaza o postare)
+  - /like/(post_id)(utilizatorul da like la o postare)
+  - /reply/post/(post_id)(utilizatorul raspunde la o postare)
 - PUT
-  - /follow/(user_email) (urmareste un utilizator in functie de email)
+  - /follow/(user_email) (urmareste un utilizator in functie de email si se updateaza si entitatea user in care apare cine o urmareste si pe cine urmareste sub forma a 2 liste)  
 - GET
   - /user/user-info/(user_email) (returneaza redalii despre userul cu emailul dat)
   - /user/user-info (returneaza detalii despre contul utilizatorului conectat)
   - /post/get-own-posts (returneaza toate postarile personale)
   - /post/get-feed (returneaza toate postarile prietenilor)
+  - /like/(post-id)(returneaza numarul de like uri ale unei postari)
 - DELETE
   - /user/del-personal-acc (sterge contul utilizatorului conectat)
   - /post/delete-post/(post_id) (sterge o postare dupa id_ul ei)
+  - /user/unfollow/(user-email) (anuleaza urmarirea unui utilizator in functie de adresa de email)
+  - /like/(post-id)(sterge un like de la o postare)
 
 
 Acesta este un ghid de bază pentru utilizarea API-ului Fake Twitter. Asigurați-vă că sunteți autentificat pentru a accesa anumite resurse și respectați cerințele de intrare specifice pentru fiecare endpoint.
