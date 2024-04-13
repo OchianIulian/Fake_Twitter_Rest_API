@@ -45,7 +45,16 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         // Allow all methods under "/register/" to be accessed without authentication
                         //.requestMatchers("/registration/**")
-                        .requestMatchers("/registration/**")
+                        .requestMatchers("/registration/**", "/v2/api-docs",
+                                "/swagger-resources",
+                                "/swagger-resources/**",
+                                "/configuration/ui",
+                                "/configuration/security",
+                                "/swagger-ui.html",
+                                "/webjars/**",
+                                // -- Swagger UI v3 (OpenAPI)
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**")
                         .permitAll()
                         // Require authentication for any other request
                         .anyRequest().authenticated()
