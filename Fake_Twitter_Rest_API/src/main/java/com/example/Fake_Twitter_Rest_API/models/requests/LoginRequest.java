@@ -13,6 +13,6 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 public class LoginRequest {
-    private final String Username;
-    private final String Password;
+    private final String username;
+    private final String password;
 }
