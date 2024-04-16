@@ -25,6 +25,9 @@ public class PostService {
     @Autowired
     LikeService likeService;
 
+    @Autowired
+    ReplyService replyService;
+
     /**
      * Create a new post
      * @param postRequest
@@ -81,6 +84,11 @@ public class PostService {
         Optional<Post> post = postRepository.findById(postId);
         //delete the likes
         likeService.removeAllLikesFromPost(postId);
+        //delete all replies
+        replyService.deleteAllRepliesFromPostWithId(postId);
+        //delete metions
+
+
 
         //delete the post
         post.ifPresent(value -> postRepository.delete(value));
