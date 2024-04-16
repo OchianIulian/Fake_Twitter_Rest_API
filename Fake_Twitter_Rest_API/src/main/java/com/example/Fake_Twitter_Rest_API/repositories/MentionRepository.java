@@ -2,6 +2,7 @@ package com.example.Fake_Twitter_Rest_API.repositories;
 
 import com.example.Fake_Twitter_Rest_API.models.Mention;
 import com.example.Fake_Twitter_Rest_API.models.Post;
+import com.example.Fake_Twitter_Rest_API.models.Reply;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,4 +17,8 @@ public interface MentionRepository  extends JpaRepository<Mention, Long>{
     @Query("SELECT m.post FROM Mention m " +
             "where m.user.id = :userId")
     List<Post> findPostsByMentionedUserId(@Param("userId") Long userId);
+
+    @Query("SELECT m FROM Mention m where m.post = :postId")
+    List<Mention> findByPost(@Param("postId") Post postId);
+
 }

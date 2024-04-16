@@ -28,6 +28,9 @@ public class PostService {
     @Autowired
     ReplyService replyService;
 
+    @Autowired
+    MentionService mentionService;
+
     /**
      * Create a new post
      * @param postRequest
@@ -87,8 +90,7 @@ public class PostService {
         //delete all replies
         replyService.deleteAllRepliesFromPostWithId(postId);
         //delete metions
-
-
+        mentionService.deleteAllMentionsFromPostWithId(postId);
 
         //delete the post
         post.ifPresent(value -> postRepository.delete(value));
