@@ -22,6 +22,9 @@ public class PostService {
     @Autowired
     PostRepository postRepository;
 
+    @Autowired
+    LikeService likeService;
+
     /**
      * Create a new post
      * @param postRequest
@@ -71,12 +74,17 @@ public class PostService {
 
     /**
      * Delete a post from it's table
-     * @param id
+     * @param postId
      * @return
      */
-    public ResponseEntity<String> deletePost(Long id) {
-        Optional<Post> post = postRepository.findById(id);
+    public ResponseEntity<String> deletePost(Long postId) {
+        Optional<Post> post = postRepository.findById(postId);
+        //delete the likes
+        likeService.removeAllLikesFromPost(postId);
+
+        //delete the post
         post.ifPresent(value -> postRepository.delete(value));
+
         return ResponseEntity.ok("Delete Post");
     }
 }
