@@ -27,7 +27,13 @@ public class Post {
     private User user;
     private String message;
     private String timestamp;//date and time when post was published
-    //private List<Reply> replies = new ArrayList<>();
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Reply> replies = new ArrayList<>();
+
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Like> likes = new ArrayList<>();
 
 
     public Post(String message) {

@@ -32,6 +32,9 @@ public class User implements UserDetails {
     private Boolean locked = false;
     private Boolean enabled = true;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Post> posts = new ArrayList<>();
+
     private List<String> followList = new ArrayList<>();
     private List<String> followersList = new ArrayList<>();
 
