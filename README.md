@@ -7,6 +7,7 @@ Această aplicație este un REST API care simulează funcționalitățile de baz
 - [Descriere](#descriere)
 - [Tehnologii utilizate](#tehnologii-utilizate)
 - [Configurare](#configurare)
+- [Securitate](#securitate)
 - [Endpoints](#endpoints)
 
 ## Descriere
@@ -15,12 +16,38 @@ Fake Twitter REST API este o aplicație backend care permite utilizatorilor:
 
 - să se înregistreze, să se autentifice
 - să urmărească alți utilizatori
-- să șteargă permanent propriul cont 
+- să șteargă permanent propriul cont (automat se vor sterge toate datele legate de acel cont din baza de date: postari, replies, mentions)
 - să obțină informații despre contul lor sau despre alte conturi identificate după adresă de email.
 - sa creeze postari
-- sa vada postarile prietenilor
+- sa vada postarile prietenilor (feed)
 - sa isi vada propriile postari
+- sa stearga postari(si toate datele legate de acestea: replies si mentions)
+- sa dea like la postari
+- sa obtina numarul de likes la o postare
+- sa stearga like-ul
+- sa dea reply la o postare
+- sa mentioneze un prieten intr-o postare
+- sa stearga mentiunea unui prieten dintr-o postare
+- sa obtina postarile in care a fost mentionat
 
+## Securitate
+
+### Stocarea datelor utilozatorilor
+Datele utilizatorilor sunt stocate în baza de date MySQL 
+utilizând criptarea pentru protejarea informațiilor sensibile, cum ar fi 
+parolele.
+
+### Autentificare si autorizare
+API-ul utilizează autentificarea bazată pe token-uri JWT pentru a proteja 
+resursele și pentru a asigura că doar utilizatorii autentificați au acces la
+anumite funcționalități. Token-urile JWT sunt emise la autentificare și trebuie 
+incluse în cererile ulterioare pentru a permite accesul.
+
+### Politici de securitate
+- Token-urile JWT expiră automat după un anumit interval de timp și trebuie 
+reînnoite pentru a menține accesul.
+- Parolele utilizatorilor sunt stocate în baza de date folosind tehnici de hash 
+și sare pentru a preveni expunerea lor în cazul unui atac de securitate.
 
 ## Tehnologii utilizate
 
@@ -28,8 +55,10 @@ Fake Twitter REST API este o aplicație backend care permite utilizatorilor:
 - Spring Boot
 - Spring Security
 - Spring Data JPA
-- MySQL (sau orice altă bază de date relațională)
+- MySQL 
 - JWT authentication
+- OpenAPI
+- Spring MVC Test Framework
 
 ## Configurare
 
